@@ -1,52 +1,74 @@
-body{
+*{
     margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
     height:100vh;
     display:flex;
     justify-content:center;
     align-items:center;
-    background:#111;
-    font-family:Arial;
+    background:#0f0f0f;
 }
 
 .container{
-    width:360px;
-    background:#1e1e1e;
+    width:380px;
+    background:#1c1c1c;
     padding:20px;
-    border-radius:10px;
-    box-shadow:0 0 12px black;
+    border-radius:12px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.6);
 }
 
-h2{
-    color:white;
+h1{
+    color:#fff;
     text-align:center;
+    margin-bottom:15px;
+    font-size:22px;
 }
 
-.input-box{
+.input-section{
     display:flex;
-    gap:5px;
+    gap:8px;
 }
 
 input{
     flex:1;
-    padding:8px;
+    padding:10px;
     border:none;
     outline:none;
+    border-radius:6px;
     background:#2a2a2a;
-    color:white;
+    color:#fff;
 }
 
 button{
-    padding:8px 10px;
+    padding:10px 12px;
     border:none;
+    border-radius:6px;
     cursor:pointer;
-    background:black;
-    color:white;
-    border:1px solid white;
+    font-weight:bold;
+}
+
+.input-section button{
+    background:#4caf50;
+    color:#fff;
+}
+
+.action-bar{
+    margin-top:10px;
+    text-align:center;
+}
+
+.clear{
+    width:100%;
+    background:#e53935;
+    color:#fff;
 }
 
 ul{
     list-style:none;
-    padding:0;
     margin-top:15px;
 }
 
@@ -54,11 +76,15 @@ li{
     background:#2a2a2a;
     margin:8px 0;
     padding:10px;
-    color:white;
+    border-radius:8px;
     display:flex;
     justify-content:space-between;
     align-items:center;
-    border-radius:5px;
+    color:#fff;
+}
+
+li span{
+    flex:1;
 }
 
 .done{
@@ -69,16 +95,14 @@ li{
 .actions button{
     margin-left:5px;
     font-size:12px;
-}.clear-box{
-    margin-top:10px;
-    text-align:center;
 }
 
-.clear-box button{
-    width:100%;
-    background:red;
-    border:none;
-    color:white;
-    padding:8px;
-    cursor:pointer;
+.actions .doneBtn{
+    background:#1976d2;
+    color:#fff;
+}
+
+.actions .deleteBtn{
+    background:#d32f2f;
+    color:#fff;
 }

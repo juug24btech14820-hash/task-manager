@@ -1,37 +1,71 @@
+let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
+window.onload = function(){
+    renderTasks();
+};
+
 function addTask(){
     let input = document.getElementById("taskInput");
-    let taskText = input.value.trim();
+    let text = input.value.trim();
 
-    if(taskText === ""){
-        alert("Please enter a task");
-        return;
-    }
+    if(text === "") return;
 
-    let li = document.createElement("li");
+    let task = {
+        id: Date.now(),
+        text: text,
+        done: false
+    };
 
-    li.innerHTML = `
-        <span>${taskText}</span>
-        <div class="actions">
-            <button onclick="markDone(this)">Done</button>
-            <button onclick="deleteTask(this)">Delete</button>
-        </div>
-    `;
-
-    document.getElementById("taskList").appendChild(li);
+    tasks.push(task);
+    saveAndRender();
 
     input.value = "";
 }
 
-function deleteTask(btn){
-    btn.parentElement.parentElement.remove();
+function deleteTask(id){
+    tasks = tasks.filter(task => task.id !== id);
+    saveAndRender();
 }
 
-function markDone(btn){
-    let task = btn.parentElement.parentElement.querySelector("span");
-    task.classList.toggle("done");
+function toggleDone(id){
+    tasks = tasks.map(task => {
+        if(task.id === id){
+            task.done = !task.done;
+        }
+        return task;
+    });
+
+    saveAndRender();
 }
 
-// ✅ NEW FEATURE: CLEAR ALL
 function clearAll(){
-    document.getElementById("taskList").innerHTML = "";
+    tasks = [];
+    saveAndRender();
+}
+
+function saveAndRender(){
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+    renderTasks();
+}
+
+function renderTasks(){
+    let list = document.getElementById("taskList");
+    list.innerHTML = "";
+
+    tasks.forEach(task => {
+        let li = document.createElement("li");
+
+        li.innerHTML = `
+            <span class="${task.done ? 'done' : ''}">${task.text}</span>
+            <div class="actions">
+                <button class="doneBtn" onclick="toggleDone(${task.id})">Done</button>
+                <button class="deleteBtn" onclick="deleteTask(${task.id})">Delete</button>
+            </div>
+        `;
+
+        list.appendChild(li);
+    });
+}function clearAll(){
+    tasks.length = 0;   // clears array properly
+    document.getElementById("list").innerHTML = ""; // instantly clears UI
 }

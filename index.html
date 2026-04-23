@@ -1,27 +1,240 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Task Manager</title>
-    <link rel="stylesheet" href="style.css">
+<title>Task Manager Pro</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background: #050505;
+    overflow:hidden;
+}
+
+/* glowing background effect */
+body::before{
+    content:"";
+    position:absolute;
+    width:400px;
+    height:400px;
+    background:linear-gradient(45deg,#00f5ff,#ff00ff);
+    filter:blur(120px);
+    top:10%;
+    left:20%;
+    z-index:0;
+}
+
+body::after{
+    content:"";
+    position:absolute;
+    width:400px;
+    height:400px;
+    background:linear-gradient(45deg,#00ff88,#0066ff);
+    filter:blur(120px);
+    bottom:10%;
+    right:20%;
+    z-index:0;
+}
+
+.container{
+    width:420px;
+    padding:25px;
+    background:rgba(255,255,255,0.05);
+    backdrop-filter: blur(15px);
+    border-radius:18px;
+    border:1px solid rgba(255,255,255,0.1);
+    box-shadow:0 0 40px rgba(0,0,0,0.8);
+    z-index:1;
+}
+
+h2{
+    text-align:center;
+    color:#fff;
+    margin-bottom:15px;
+    letter-spacing:2px;
+    text-shadow:0 0 10px #00f5ff;
+}
+
+.input-box{
+    display:flex;
+    gap:10px;
+}
+
+input{
+    flex:1;
+    padding:12px;
+    border:none;
+    outline:none;
+    border-radius:10px;
+    background:rgba(255,255,255,0.08);
+    color:#fff;
+    transition:0.3s;
+}
+
+input:focus{
+    box-shadow:0 0 10px #00f5ff;
+}
+
+button{
+    border:none;
+    cursor:pointer;
+    border-radius:10px;
+    font-weight:bold;
+    transition:0.3s;
+}
+
+.add-btn{
+    padding:12px 14px;
+    background:linear-gradient(45deg,#00f5ff,#00ff88);
+    color:#000;
+}
+
+.add-btn:hover{
+    transform:scale(1.05);
+    box-shadow:0 0 15px #00f5ff;
+}
+
+.clear-btn{
+    width:100%;
+    margin-top:10px;
+    padding:10px;
+    background:linear-gradient(45deg,#ff004c,#ff7a00);
+    color:#fff;
+}
+
+.clear-btn:hover{
+    box-shadow:0 0 15px #ff004c;
+    transform:scale(1.02);
+}
+
+ul{
+    list-style:none;
+    margin-top:15px;
+}
+
+li{
+    margin:10px 0;
+    padding:12px;
+    border-radius:12px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    color:#fff;
+    background:rgba(255,255,255,0.06);
+    border:1px solid rgba(255,255,255,0.08);
+    transition:0.3s;
+    animation:pop 0.3s ease;
+}
+
+li:hover{
+    transform:translateY(-3px);
+    box-shadow:0 0 15px rgba(0,245,255,0.4);
+}
+
+@keyframes pop{
+    from{transform:scale(0.8); opacity:0;}
+    to{transform:scale(1); opacity:1;}
+}
+
+.done{
+    text-decoration:line-through;
+    color:gray;
+    opacity:0.7;
+}
+
+.actions button{
+    margin-left:6px;
+    padding:6px 10px;
+    font-size:12px;
+}
+
+.doneBtn{
+    background:#00f5ff;
+    color:#000;
+}
+
+.deleteBtn{
+    background:#ff004c;
+    color:#fff;
+}
+</style>
+
 </head>
+
 <body>
 
 <div class="container">
-    <h2>Task Manager</h2>
+
+    <h2>⚡ Task Manager Pro</h2>
 
     <div class="input-box">
-        <input type="text" id="taskInput" placeholder="Enter your task">
-        <button onclick="addTask()">Add</button>
+        <input id="taskInput" placeholder="Enter your task...">
+        <button class="add-btn" onclick="addTask()">Add</button>
     </div>
 
-    <div class="clear-box">
-        <button onclick="clearAll()">Clear All</button>
-    </div>
+    <button class="clear-btn" onclick="clearAll()">Clear All</button>
 
-    <ul id="taskList"></ul>
+    <ul id="list"></ul>
+
 </div>
 
-<script src="script.js"></script>
+<script>
+let tasks = [];
+
+function addTask(){
+    let input = document.getElementById("taskInput");
+
+    if(input.value.trim() === "") return;
+
+    tasks.push({
+        text: input.value,
+        done:false
+    });
+
+    input.value="";
+    render();
+}
+
+function render(){
+    let list = document.getElementById("list");
+    list.innerHTML="";
+
+    tasks.forEach((t,i)=>{
+        list.innerHTML += `
+        <li>
+            <span class="${t.done ? 'done':''}">${t.text}</span>
+            <div class="actions">
+                <button class="doneBtn" onclick="toggle(${i})">Done</button>
+                <button class="deleteBtn" onclick="del(${i})">X</button>
+            </div>
+        </li>`;
+    });
+}
+
+function toggle(i){
+    tasks[i].done = !tasks[i].done;
+    render();
+}
+
+function del(i){
+    tasks.splice(i,1);
+    render();
+}
+
+function clearAll(){
+    tasks = [];
+    render();
+}
+</script>
+
 </body>
 </html>
