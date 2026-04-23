@@ -6,22 +6,32 @@ body {
 }
 
 .container {
-    margin-top: 100px;
+    margin-top: 80px;
 }
 
 input {
     padding: 10px;
-    width: 200px;
+    width: 220px;
+    border-radius: 5px;
+    border: none;
 }
 
 button {
     padding: 10px;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
+    background: #38bdf8;
+    color: black;
 }
 
 li {
     margin: 10px;
     list-style: none;
+    background: #1e293b;
+    padding: 10px;
+    border-radius: 5px;
 }
 
 .completed {
