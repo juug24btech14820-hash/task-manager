@@ -19,4 +19,6 @@ function addTask() {
 function clearAll() {
     document.getElementById("taskList").innerHTML = "";
     localStorage.removeItem("tasks");
-}
+}li.innerHTML = task +
+" <div><button onclick='completeTask(this)'>✔</button>" +
+"<button onclick='deleteTask(this)'>❌</button></div>";
