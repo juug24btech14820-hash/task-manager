@@ -1,24 +1,37 @@
-function addTask() {
+function addTask(){
     let input = document.getElementById("taskInput");
-    let task = input.value;
+    let taskText = input.value.trim();
 
-    alert("Button clicked"); // TEST LINE
-
-    if (task === "") {
-        alert("Enter something!");
+    if(taskText === ""){
+        alert("Please enter a task");
         return;
     }
 
     let li = document.createElement("li");
-    li.innerHTML = task;
+
+    li.innerHTML = `
+        <span>${taskText}</span>
+        <div class="actions">
+            <button onclick="markDone(this)">Done</button>
+            <button onclick="deleteTask(this)">Delete</button>
+        </div>
+    `;
 
     document.getElementById("taskList").appendChild(li);
 
     input.value = "";
 }
-function clearAll() {
+
+function deleteTask(btn){
+    btn.parentElement.parentElement.remove();
+}
+
+function markDone(btn){
+    let task = btn.parentElement.parentElement.querySelector("span");
+    task.classList.toggle("done");
+}
+
+// ✅ NEW FEATURE: CLEAR ALL
+function clearAll(){
     document.getElementById("taskList").innerHTML = "";
-    localStorage.removeItem("tasks");
-}li.innerHTML = task +
-" <div><button onclick='completeTask(this)'>✔</button>" +
-"<button onclick='deleteTask(this)'>❌</button></div>";
+}
